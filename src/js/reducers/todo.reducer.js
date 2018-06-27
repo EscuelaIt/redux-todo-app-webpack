@@ -1,18 +1,46 @@
-export const reducerTodos = (todos = [], action) => {
+export const reducerTodos = (todoState = {}, action) => {
   switch (action.type) {
+    case 'LOAD_TODOS': {
+      return {
+        ...todoState,
+        loading: true
+      }
+    }
+    case 'LOAD_TODOS_SUCCESS': {
+      const todos = action.payload.todos;
+      return {
+        data: todos,
+        loading: false,
+        errors: []
+      }
+    }
+    case 'LOAD_TODOS_FAIL': {
+      const errors = action.payload.errors;
+      return {
+        data: [],
+        loading: false,
+        errors
+      }
+    }
     case 'ADD_TODO':{
-      return [...todos, action.payload];
+      return {
+        ...todoState,
+        data: [...todos, action.payload]
+      };
     }
     case 'DELETE_TODO': {
       const id = action.payload.id;
-      const newState = todos.filter(item => {
+      const todos = todos.filter(item => {
         return item.id !== id;
       })
-      return newState;
+      return {
+        ...todoState,
+        data: todos
+      };
     }
     case 'TOGGLE_TODO': {
       const id = action.payload.id;
-      const newState = todos.map(item => {
+      const todos = todos.map(item => {
         if (item.id === id) {
           return {
             ...item,
@@ -21,10 +49,13 @@ export const reducerTodos = (todos = [], action) => {
         }
         return item;
       })
-      return newState;
+      return {
+        ...todoState,
+        data: todos
+      };
     }
     default:{
-      return todos;
+      return todoState;
     }
   }
 }

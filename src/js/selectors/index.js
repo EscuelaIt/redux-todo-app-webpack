@@ -1,7 +1,8 @@
 import { createSelector } from 'reselect';
 
 export const getFilter = (state) => state.filter;
-export const getTodos = (state) => state.todos;
+export const getTodos = (state) => state.todoState.data;
+export const getLoadingTodos = (state) => state.todoState.loading;
 
 export const getVisibleTodos = createSelector(
   [ getFilter, getTodos ],

@@ -1,4 +1,4 @@
- const todos = [
+const todos = [
   {
     id: 1,
     completed: true,
@@ -21,8 +21,14 @@
   },
 ];
 
+const todoState = {
+  data: [],
+  loading: false,
+  errors: []
+}
+
 export const initialState = {
-  todos,
+  todoState,
   filter: 'ALL',
 };
 

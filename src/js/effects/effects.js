@@ -26,3 +26,25 @@ export function fail() {
     }
   };
 }
+
+export function fetchTodos() {
+  return async (dispatch) => {
+    dispatch({type: 'LOAD_TODOS'});
+    try {
+      const todos = await getAllTodos();
+      dispatch({
+        type: 'LOAD_TODOS_SUCCESS',
+        payload: {
+          todos
+        }
+      });
+    } catch (error) {
+      dispatch({
+        type: 'LOAD_TODOS_FAIL',
+        payload: {
+          errors: [error]
+        }
+      });
+    }
+  };
+}

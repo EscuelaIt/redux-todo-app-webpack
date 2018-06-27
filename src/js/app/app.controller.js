@@ -1,7 +1,7 @@
-import { addTodo, deleteTodo, changeFilter, toggleTodo } from './../actions';
-import { getVisibleTodos } from './../selectors';
+import { addTodo, deleteTodo, changeFilter, toggleTodo, loadTodos } from './../actions';
+import { getVisibleTodos, getLoadingTodos } from './../selectors';
 import subscribe from 'redux-subscribe-reselect';
-import { success, fail } from './../effects/effects';
+import { success, fail, fetchTodos } from './../effects/effects';
 
 export class AppController {
 
@@ -14,9 +14,13 @@ export class AppController {
     // this.store.subscribe(this.showTodos.bind(this));
 
     subscribe(this.store, getVisibleTodos, this.showTodos.bind(this));
+    subscribe(this.store, getLoadingTodos, this.showLoading.bind(this));
   
-    this.store.dispatch(success());
-    this.store.dispatch(fail());
+    // this.store.dispatch(success());
+    // this.store.dispatch(fail());
+    // this.store.dispatch(fetchTodos());
+    const action = loadTodos();
+    this.store.dispatch(action);
   
   }
 
@@ -66,5 +70,9 @@ export class AppController {
     if(todos !== undefined) {
       this.template.showTodos(todos);
     }
+  }
+
+  showLoading(state) {
+    this.template.showLoading(state);
   }
 }

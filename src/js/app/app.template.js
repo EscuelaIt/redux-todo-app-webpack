@@ -8,6 +8,7 @@ export class AppTemplate {
     this.$todoList = $id('todo-list');
     this.$form = $id('form');
     this.$newTodo = $id('new-todo');
+    this.$loading = $id('loading');
   }
 
   showTodos(todos) {
@@ -43,12 +44,16 @@ export class AppTemplate {
     return todosHtml;
   }
 
+  showLoading(state) {
+    this.$loading.style.opacity = state ? 1: 0;
+  }
+
   renderTodo(todo) {
     return `
     <li data-id="${todo.id}" class="${todo.completed}">
       <div class="view">
         <input class="toggle" type="checkbox" ${todo.completed ? 'checked': ''}>
-        <label>${todo.text}</label>
+        <label>${todo.title}</label>
         <button class="destroy" type="button"></button>
       </div>
     </li>`;
